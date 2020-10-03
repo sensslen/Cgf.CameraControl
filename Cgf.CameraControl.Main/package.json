@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "patch-package",
     "prestart": "npm run tsc",
     "start": "node build/index.js",
     "tsc": "tsc"
@@ -26,7 +25,6 @@
   "homepage": "https://github.com/sensslen/Cgf.CameraControl#readme",
   "devDependencies": {
     "@types/node": "^14.11.1",
-    "patch-package": "^6.2.2",
     "typescript": "^4.0.3"
   },
   "dependencies": {
@@ -34,7 +32,7 @@
     "atem-connection": "^2.1.0",
     "axios": "^0.20.0",
     "everpolate": "0.0.3",
-    "node-gamepad": "^0.1.15",
+    "node-gamepad": "git+https://github.com/sensslen/node-gamepad.git",
     "strict-event-emitter-types": "^2.0.0"
   }
 }
