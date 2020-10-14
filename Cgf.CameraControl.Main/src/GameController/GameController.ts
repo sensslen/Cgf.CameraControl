@@ -40,8 +40,8 @@ export class GameController {
     this.AtemMixEffectBlock = config.AtemMixEffectBlock;
     this.atem
       .previewStateUpdateEmitterGet(this.AtemMixEffectBlock)
-      .on("previewUpdate", (preview: number, isProgram: boolean) =>
-        this.selectedConnectionChanged(preview, isProgram)
+      .on("previewUpdate", (preview: number, isOnAir: boolean) =>
+        this.selectedConnectionChanged(preview, isOnAir)
       );
   }
 
@@ -89,18 +89,17 @@ export class GameController {
   }
 
   changeConnection(direction: InputChangeDirection) {
-    let nextIndex = this.currentCameraConnection?.connectionChangeDefinition[
+    let next = this.currentCameraConnection?.connectionChangeDefinition[
       direction
     ];
+    let nextInput = next
+      ? next
+      : this.imageConnections[0].connection.AtemImputNumber;
 
-    this.atem.changePreview(
-      this.AtemMixEffectBlock,
-      this.imageConnections[nextIndex ? nextIndex : 0].connection
-        .AtemImputNumber
-    );
+    this.atem.changePreview(this.AtemMixEffectBlock, nextInput);
   }
 
-  selectedConnectionChanged(preview: number, isProgram: boolean): void {
+  selectedConnectionChanged(preview: number, isOnAir: boolean): void {
     if (this.currentCameraConnection !== undefined) {
       if (this.currentCameraConnection.connection.AtemImputNumber === preview) {
         return;
@@ -111,15 +110,15 @@ export class GameController {
     this.imageConnections.forEach((imageConnection) => {
       if (imageConnection.connection.AtemImputNumber === preview) {
         this.currentCameraConnection = imageConnection;
-        if (isProgram) {
+        if (isOnAir) {
           this.pad.rumble();
         }
       }
     });
-    this.printConnection();
+    this.printConnection(isOnAir);
   }
 
-  printConnection() {
+  printConnection(isOnAir: boolean) {
     if (this.currentCameraConnection !== undefined) {
       let additionalInfo = this.currentCameraConnection.connection.connectionAdditionalInfo();
       console.log(
@@ -127,7 +126,9 @@ export class GameController {
           this.currentCameraConnection.connection.AtemImputNumber
         } - ${this.atem.nameGet(
           this.currentCameraConnection.connection.AtemImputNumber
-        )}${additionalInfo ? `(${additionalInfo})` : ""}`
+        )}${additionalInfo ? `(${additionalInfo})` : ""} ${
+          isOnAir ? " - onAir" : ""
+        }`
       );
     } else {
       console.log("Input selected that is not managed with this application");
