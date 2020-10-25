@@ -1,4 +1,4 @@
 export interface AtemConnectionConfig {
-  IP: string;
-  identifier: string;
+    IP: string;
+    identifier: string;
 }

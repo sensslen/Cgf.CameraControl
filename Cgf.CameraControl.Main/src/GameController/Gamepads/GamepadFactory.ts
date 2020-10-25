@@ -7,6 +7,11 @@ export class GamepadFactory {
     switch (config.ControllerType) {
       case "logitech/gamepadf310":
         return new logitechF310(config.ControllerSerialNumber);
+      case "sony/dualshock4":
+        console.log(
+          `WARNING: ${config.ControllerType} is only supported experimantally`
+        );
+        return new dualshock4(config.ControllerSerialNumber);
       default:
         console.log(`${config.ControllerType} not yet supported`);
         process.exit();
