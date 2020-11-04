@@ -1,32 +1,32 @@
 import { GameController } from './GameController/GameController';
-import { ControllerConfig } from './GameController/ControllerConfig';
+import { IControllerConfig } from './GameController/IControllerConfig';
 import { AtemConnection } from './AtemConnection/AtemConnection';
 import * as fs from 'fs';
+import * as path from 'path';
 import Dictionary from './Dictionary/Dictionary';
 import yargs = require('yargs/yargs');
 import { AtemConnectionConfig } from './AtemConnection/AtemConnectionConfig';
 
-interface IInternalGameControllerConfig {
-    ControllerConfig: ControllerConfig;
+interface IInternalGameControllerConfig extends IControllerConfig {
     AtemConnection: string;
 }
 
 interface IConfigFile {
-    Gamepads: Array<IInternalGameControllerConfig>;
+    Controllers: Array<IInternalGameControllerConfig>;
     AtemConnections: Array<AtemConnectionConfig>;
 }
 
 const argv = yargs(process.argv.slice(2)).options({
-    config: { type: 'string', default: 'config.json' },
+    config: { type: 'string', default: './config.json' },
 }).argv;
 
-let config: IConfigFile = JSON.parse(fs.readFileSync(argv.config).toString());
+let config: IConfigFile = JSON.parse(fs.readFileSync(path.join(__dirname, argv.config)).toString());
 
 let atemInstances = new Dictionary<AtemConnection>();
 config.AtemConnections.forEach((c) => {
     atemInstances.add(c.identifier, new AtemConnection(c));
 });
 
-config.Gamepads.forEach((c) => {
-    new GameController(c.ControllerConfig, atemInstances.getItem(c.AtemConnection));
+config.Controllers.forEach((c) => {
+    new GameController(c, atemInstances.getItem(c.AtemConnection));
 });

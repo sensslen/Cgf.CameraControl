@@ -1,38 +1,41 @@
 {
-  "name": "cgf.cameracontrol.controller",
-  "version": "1.0.0",
-  "description": "Software that allows to contorl Blackmagicdesign ATEM Switcher and it's associated cameras",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "npm run tsc",
-    "start": "node build/index.js",
-    "tsc": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sensslen/Cgf.CameraControl.git"
-  },
-  "keywords": [
-    "camera",
-    "control"
-  ],
-  "author": "Simon Ensslen",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sensslen/Cgf.CameraControl/issues"
-  },
-  "homepage": "https://github.com/sensslen/Cgf.CameraControl#readme",
-  "devDependencies": {
-    "@types/node": "^14.11.1",
-    "typescript": "^4.0.3"
-  },
-  "dependencies": {
-    "@microsoft/signalr": "^3.1.8",
-    "atem-connection": "^2.1.0",
-    "axios": "^0.20.0",
-    "everpolate": "0.0.3",
-    "node-gamepad": "git+https://github.com/sensslen/node-gamepad.git",
-    "strict-event-emitter-types": "^2.0.0"
-  }
+    "name": "cgf.cameracontrol.controller",
+    "version": "1.0.0",
+    "description": "Software that allows to contorl Blackmagicdesign ATEM Switcher and it's associated cameras",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prestart": "npm run tsc && cpy src/config.json build",
+        "start": "node build/index.js",
+        "tsc": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sensslen/Cgf.CameraControl.git"
+    },
+    "keywords": [
+        "camera",
+        "control"
+    ],
+    "author": "Simon Ensslen",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/sensslen/Cgf.CameraControl/issues"
+    },
+    "homepage": "https://github.com/sensslen/Cgf.CameraControl#readme",
+    "devDependencies": {
+        "@types/node": "^14.11.1",
+        "@types/yargs": "^15.0.9",
+        "cpy-cli": "^3.1.1",
+        "typescript": "^4.0.3"
+    },
+    "dependencies": {
+        "@microsoft/signalr": "^3.1.8",
+        "atem-connection": "^2.1.0",
+        "axios": "^0.20.0",
+        "everpolate": "0.0.3",
+        "node-gamepad": "git+https://github.com/sensslen/node-gamepad.git",
+        "strict-event-emitter-types": "^2.0.0",
+        "yargs": "^16.1.0"
+    }
 }
