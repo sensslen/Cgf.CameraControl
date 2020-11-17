@@ -1,86 +1,44 @@
-import { JoyStickValue } from "./JoyStickValue";
-import { IGamePad, IGamepadEvents, InputChangeDirection } from "./IGamePad";
-import { EventEmitter } from "events";
-import StrictEventEmitter from "strict-event-emitter-types";
+import { JoyStickValue } from './JoyStickValue';
+import { IGamePad, IGamepadEvents } from './IGamePad';
+import { EventEmitter } from 'events';
+import StrictEventEmitter from 'strict-event-emitter-types';
+import { GamepadHelper } from './GamepadHelper';
 
-const Gamepad = require("node-gamepad");
-const interpolate = require("everpolate").linear;
+const Gamepad = require('node-gamepad');
 
 export class dualshock4 implements IGamePad {
-  private pad: any;
-  private readonly moveInterpolation: number[][] = [
-    [0, 63, 31, 127, 128, 160, 172, 255],
-    [255, 70, 20, 0, 0, -20, -70, -255],
-  ];
+    private pad: any;
 
-  keypadEvents$: StrictEventEmitter<
-    EventEmitter,
-    IGamepadEvents
-  > = new EventEmitter();
+    keypadEvents$: StrictEventEmitter<EventEmitter, IGamepadEvents> = new EventEmitter();
 
-  constructor(padSerialNumber?: string) {
-    if (!(padSerialNumber === undefined)) {
-      throw new Error(
-        "Unfortunately identification of controllers by serial number is not yet supported"
-      );
+    constructor(padSerialNumber?: string) {
+        this.pad = new Gamepad('ps4/dualshock4', { serialNumber: padSerialNumber });
+
+        let gamepadWrapper = new GamepadHelper(this.keypadEvents$);
+
+        this.pad.on('left:move', (value: JoyStickValue) => gamepadWrapper.leftJoystickMove(value));
+        this.pad.on('right:move', (value: JoyStickValue) => gamepadWrapper.rightJoystickMove(value));
+
+        this.pad.on('dpadLeft:press', () => gamepadWrapper.leftKeyPress());
+        this.pad.on('dpadUp:press', () => gamepadWrapper.upKeyPress());
+        this.pad.on('dpadRight:press', () => gamepadWrapper.rightKeyPress());
+        this.pad.on('dpadDown:press', () => gamepadWrapper.downkeypress());
+
+        this.pad.on('r1:press', () => gamepadWrapper.cutKeyPress());
+        this.pad.on('r2:press', () => gamepadWrapper.autoKeyPress());
+
+        this.pad.on('l1:press', () => gamepadWrapper.altUpperKeyPress());
+        this.pad.on('l1:release', () => gamepadWrapper.altUpperKeyRelease());
+        this.pad.on('l2:press', () => gamepadWrapper.altLowerKeyPress());
+        this.pad.on('l2:release', () => gamepadWrapper.altLowerKeyRelease());
+
+        this.pad.on('x:press', () => gamepadWrapper.aKeyPress());
+        this.pad.on('circle:press', () => gamepadWrapper.bKeyPress());
+
+        this.pad.connect();
     }
-    this.pad = new Gamepad("ps4/dualshock4");
-    this.pad.connect();
 
-    this.pad.on("left:move", (value: JoyStickValue) => {
-      let pan = interpolate(
-        value.x,
-        this.moveInterpolation[0],
-        this.moveInterpolation[1]
-      )[0];
-      this.keypadEvents$.emit("pan", Math.round(pan));
-      let tilt = -interpolate(
-        value.y,
-        this.moveInterpolation[0],
-        this.moveInterpolation[1]
-      )[0];
-      this.keypadEvents$.emit("tilt", Math.round(tilt));
-    });
-
-    this.pad.on("right:move", (value: JoyStickValue) => {
-      this.keypadEvents$.emit("zoom", Math.round((-value.y + 127) / 16));
-      this.keypadEvents$.emit("focus", Math.round((value.x - 127) / 200));
-    });
-
-    this.pad.on("dpadLeft:press", () => {
-      this.keypadEvents$.emit("inputChange", InputChangeDirection.left);
-    });
-
-    this.pad.on("dpadUp:press", () => {
-      this.keypadEvents$.emit("inputChange", InputChangeDirection.up);
-    });
-
-    this.pad.on("dpadRight:press", () => {
-      this.keypadEvents$.emit("inputChange", InputChangeDirection.right);
-    });
-
-    this.pad.on("dpadDown:press", () => {
-      this.keypadEvents$.emit("inputChange", InputChangeDirection.down);
-    });
-
-    this.pad.on("r1:press", () => {
-      this.keypadEvents$.emit("cut");
-    });
-
-    this.pad.on("r2:press", () => {
-      this.keypadEvents$.emit("auto");
-    });
-
-    this.pad.on("x:press", () => {
-      this.keypadEvents$.emit("keyToggle", 0);
-    });
-
-    this.pad.on("circle:press", () => {
-      this.keypadEvents$.emit("keyToggle", 1);
-    });
-  }
-
-  rumble(): void {
-    // This Gamepad does not provide rumbling - hence left empty
-  }
+    rumble(): void {
+        this.pad.rumble(200);
+    }
 }
