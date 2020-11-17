@@ -12,7 +12,10 @@ class InternalImageConnection {
         public readonly connectionChangeDefinition: {
             [key in InputChangeDirection]: number;
         },
-        public readonly altConnectionChangeDefinition?: {
+        public readonly alternateUpperKeyConnectionChangeDefinition?: {
+            [key in InputChangeDirection]: number;
+        },
+        public readonly alternateLowerKeyConnectionChangeDefinition?: {
             [key in InputChangeDirection]: number;
         }
     ) {}
@@ -36,7 +39,8 @@ export class GameController {
                 new InternalImageConnection(
                     ImageConnectionFactory.GetImageConnection(c),
                     c.ConnectionChangeDefinition,
-                    c.AltConnectionChangeDefinition
+                    c.AltConnectionChangeDefinition,
+                    c.AltLowerConnectionChangeDefinition
                 )
             );
         });
@@ -93,15 +97,22 @@ export class GameController {
         let next: number | undefined = undefined;
         if (this.currentCameraConnection) {
             switch (directionAlt) {
-                case AlternateInputChangeDirection.alt:
-                    if (this.currentCameraConnection.altConnectionChangeDefinition) {
-                        next = this.currentCameraConnection.altConnectionChangeDefinition[direction];
+                case AlternateInputChangeDirection.alternateKeyUpper:
+                    if (this.currentCameraConnection.alternateUpperKeyConnectionChangeDefinition) {
+                        next = this.currentCameraConnection.alternateUpperKeyConnectionChangeDefinition[direction];
                     } else {
                         next = this.currentCameraConnection.connectionChangeDefinition[direction];
                     }
                     break;
-                case AlternateInputChangeDirection.none:
-                    next = this.currentCameraConnection?.connectionChangeDefinition[direction];
+                case AlternateInputChangeDirection.alternateKeyLower:
+                    if (this.currentCameraConnection.alternateLowerKeyConnectionChangeDefinition) {
+                        next = this.currentCameraConnection.alternateLowerKeyConnectionChangeDefinition[direction];
+                    } else {
+                        next = this.currentCameraConnection.connectionChangeDefinition[direction];
+                    }
+                    break;
+                default:
+                    next = this.currentCameraConnection.connectionChangeDefinition[direction];
                     break;
             }
         } else {

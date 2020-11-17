@@ -59,11 +59,27 @@ export class logitechF310 implements IGamePad {
         });
 
         this.pad.on('LB:press', () => {
-            this.altkeyState = AlternateInputChangeDirection.alt;
+            if (this.altkeyState == AlternateInputChangeDirection.none) {
+                this.altkeyState = AlternateInputChangeDirection.alternateKeyUpper;
+            }
         });
 
         this.pad.on('LB:release', () => {
-            this.altkeyState = AlternateInputChangeDirection.none;
+            if (this.altkeyState == AlternateInputChangeDirection.alternateKeyUpper) {
+                this.altkeyState = AlternateInputChangeDirection.none;
+            }
+        });
+
+        this.pad.on('LT:press', () => {
+            if (this.altkeyState == AlternateInputChangeDirection.none) {
+                this.altkeyState = AlternateInputChangeDirection.alternateKeyLower;
+            }
+        });
+
+        this.pad.on('LT:release', () => {
+            if (this.altkeyState == AlternateInputChangeDirection.alternateKeyLower) {
+                this.altkeyState = AlternateInputChangeDirection.none;
+            }
         });
 
         this.pad.on('A:press', () => {

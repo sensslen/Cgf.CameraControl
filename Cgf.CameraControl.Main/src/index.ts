@@ -17,10 +17,10 @@ interface IConfigFile {
 }
 
 const argv = yargs(process.argv.slice(2)).options({
-    config: { type: 'string', default: './config.json' },
+    config: { type: 'string', default: path.join(__dirname, 'config.json') },
 }).argv;
 
-let config: IConfigFile = JSON.parse(fs.readFileSync(path.join(__dirname, argv.config)).toString());
+let config: IConfigFile = JSON.parse(fs.readFileSync(argv.config).toString());
 
 let atemInstances = new Dictionary<AtemConnection>();
 config.AtemConnections.forEach((c) => {

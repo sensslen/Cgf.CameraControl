@@ -10,7 +10,8 @@ export enum InputChangeDirection {
 
 export enum AlternateInputChangeDirection {
     none,
-    alt,
+    alternateKeyUpper,
+    alternateKeyLower,
 }
 
 export interface IGamepadEvents {
