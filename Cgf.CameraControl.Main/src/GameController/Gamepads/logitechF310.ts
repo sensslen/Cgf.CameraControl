@@ -7,35 +7,33 @@ import { GamepadHelper } from './GamepadHelper';
 const Gamepad = require('node-gamepad');
 
 export class logitechF310 implements IGamePad {
-    private pad: any;
-
     keypadEvents$: StrictEventEmitter<EventEmitter, IGamepadEvents> = new EventEmitter();
 
     constructor(padSerialNumber?: string) {
-        this.pad = new Gamepad('logitech/gamepadf310', { serialNumber: padSerialNumber });
+        let pad = new Gamepad('logitech/gamepadf310', { serialNumber: padSerialNumber });
 
         let gamepadWrapper = new GamepadHelper(this.keypadEvents$);
 
-        this.pad.on('left:move', (value: JoyStickValue) => gamepadWrapper.leftJoystickMove(value));
-        this.pad.on('right:move', (value: JoyStickValue) => gamepadWrapper.rightJoystickMove(value));
+        pad.on('left:move', (value: JoyStickValue) => gamepadWrapper.leftJoystickMove(value));
+        pad.on('right:move', (value: JoyStickValue) => gamepadWrapper.rightJoystickMove(value));
 
-        this.pad.on('dpadLeft:press', () => gamepadWrapper.leftKeyPress());
-        this.pad.on('dpadUp:press', () => gamepadWrapper.upKeyPress());
-        this.pad.on('dpadRight:press', () => gamepadWrapper.rightKeyPress());
-        this.pad.on('dpadDown:press', () => gamepadWrapper.downkeypress());
+        pad.on('dpadLeft:press', () => gamepadWrapper.leftKeyPress());
+        pad.on('dpadUp:press', () => gamepadWrapper.upKeyPress());
+        pad.on('dpadRight:press', () => gamepadWrapper.rightKeyPress());
+        pad.on('dpadDown:press', () => gamepadWrapper.downkeypress());
 
-        this.pad.on('RB:press', () => gamepadWrapper.cutKeyPress());
-        this.pad.on('RT:press', () => gamepadWrapper.autoKeyPress());
+        pad.on('RB:press', () => gamepadWrapper.cutKeyPress());
+        pad.on('RT:press', () => gamepadWrapper.autoKeyPress());
 
-        this.pad.on('LB:press', () => gamepadWrapper.altUpperKeyPress());
-        this.pad.on('LB:release', () => gamepadWrapper.altUpperKeyRelease());
-        this.pad.on('LT:press', () => gamepadWrapper.altLowerKeyPress());
-        this.pad.on('LT:release', () => gamepadWrapper.altLowerKeyRelease());
+        pad.on('LB:press', () => gamepadWrapper.altUpperKeyPress());
+        pad.on('LB:release', () => gamepadWrapper.altUpperKeyRelease());
+        pad.on('LT:press', () => gamepadWrapper.altLowerKeyPress());
+        pad.on('LT:release', () => gamepadWrapper.altLowerKeyRelease());
 
-        this.pad.on('A:press', () => gamepadWrapper.aKeyPress());
-        this.pad.on('B:press', () => gamepadWrapper.bKeyPress());
+        pad.on('A:press', () => gamepadWrapper.aKeyPress());
+        pad.on('B:press', () => gamepadWrapper.bKeyPress());
 
-        this.pad.connect();
+        pad.connect();
     }
 
     rumble(): void {
