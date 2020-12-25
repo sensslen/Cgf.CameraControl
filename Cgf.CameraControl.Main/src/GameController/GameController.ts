@@ -135,6 +135,7 @@ export class GameController {
         }
 
         if (next) {
+            this._currentCameraConnection?.connection.setState(new State());
             this.atem.changePreview(this._atemMixEffectBlock, next);
         }
     }
