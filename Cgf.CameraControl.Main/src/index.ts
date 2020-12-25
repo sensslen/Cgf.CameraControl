@@ -6,6 +6,7 @@ import * as path from 'path';
 import Dictionary from './Dictionary/Dictionary';
 import yargs = require('yargs/yargs');
 import { AtemConnectionConfig } from './AtemConnection/AtemConnectionConfig';
+import { ConsoleLogger } from './Logging/ConsoleLogger';
 
 interface IInternalGameControllerConfig extends IControllerConfig {
     AtemConnection: string;
@@ -21,12 +22,13 @@ const argv = yargs(process.argv.slice(2)).options({
 }).argv;
 
 let config: IConfigFile = JSON.parse(fs.readFileSync(argv.config).toString());
+let logger = new ConsoleLogger();
 
 let atemInstances = new Dictionary<AtemConnection>();
 config.AtemConnections.forEach((c) => {
-    atemInstances.add(c.identifier, new AtemConnection(c));
+    atemInstances.add(c.identifier, new AtemConnection(c, logger));
 });
 
 config.Controllers.forEach((c) => {
-    new GameController(c, atemInstances.getItem(c.AtemConnection));
+    new GameController(c, atemInstances.getItem(c.AtemConnection), logger);
 });

@@ -1,3 +1,4 @@
+import { ILogger } from '../Logging/ILogger';
 import { CameraConnection } from './CameraConnection';
 import { CameraConnectionConfig } from './CameraConnectionConfig';
 import { IImageConnection } from './IImageConnection';
@@ -9,10 +10,10 @@ interface ImageConnectionConfigInternal extends ImageConnectionConfig {
 }
 
 export class ImageConnectionFactory {
-    static GetImageConnection(config: ImageConnectionConfig): IImageConnection {
+    static GetImageConnection(config: ImageConnectionConfig, logger: ILogger): IImageConnection {
         let internalConfig = <ImageConnectionConfigInternal>config;
         if (internalConfig.CgfCameraConnection) {
-            return new CameraConnection(config, internalConfig.CgfCameraConnection);
+            return new CameraConnection(config, internalConfig.CgfCameraConnection, logger);
         }
         return new ImageConnection(config);
     }

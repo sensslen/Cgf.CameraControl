@@ -2,6 +2,7 @@ import { Atem, AtemState } from 'atem-connection';
 import { AtemConnectionConfig } from './AtemConnectionConfig';
 import StrictEventEmitter from 'strict-event-emitter-types';
 import { EventEmitter } from 'events';
+import { ILogger } from '../Logging/ILogger';
 
 export interface IMeEvents {
     previewUpdate: (preview: number, isProgram: boolean) => void;
@@ -10,16 +11,16 @@ export interface IMeEvents {
 export class AtemConnection {
     private readonly mixermap = new Map<number, StrictEventEmitter<EventEmitter, IMeEvents>>();
     private readonly atem: Atem;
-    constructor(config: AtemConnectionConfig) {
+    constructor(config: AtemConnectionConfig, logger: ILogger) {
         this.atem = new Atem();
 
-        this.atem.on('info', console.log);
-        this.atem.on('error', console.error);
+        this.atem.on('info', logger.Log);
+        this.atem.on('error', logger.Error);
 
         this.atem.connect(config.IP);
 
         this.atem.on('connected', () => {
-            console.log('atem connection established (' + config.IP + ')');
+            logger.Log('atem connection established (' + config.IP + ')');
             if (this.atem.state) {
                 this.stateChange(this.atem.state);
             }

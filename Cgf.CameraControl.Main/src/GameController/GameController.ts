@@ -5,6 +5,7 @@ import { AtemConnection } from '../AtemConnection/AtemConnection';
 import { IImageConnection } from '../ImageConnection/IImageConnection';
 import { GamepadFactory } from './Gamepads/GamepadFactory';
 import { AltKeyState, IGamePad, InputChangeDirection, SpecialFunctionKey } from './Gamepads/IGamePad';
+import { ILogger } from '../Logging/ILogger';
 
 class InternalImageConnection {
     constructor(
@@ -37,16 +38,16 @@ export class GameController {
     private _pad: IGamePad;
     private readonly _specialFunctionKeys: SpecialFunctionKeySpec;
 
-    constructor(config: IControllerConfig, private atem: AtemConnection) {
+    constructor(config: IControllerConfig, private atem: AtemConnection, private logger: ILogger) {
         this._state = new State();
 
-        this._pad = GamepadFactory.getGamepad(config);
+        this._pad = GamepadFactory.getGamepad(config, logger);
         this.connectGamepad(config);
 
         config.ImageConnections.forEach((c) => {
             this._imageConnections.push(
                 new InternalImageConnection(
-                    ImageConnectionFactory.GetImageConnection(c),
+                    ImageConnectionFactory.GetImageConnection(c, logger),
                     c.ConnectionChangeDefinition,
                     c.AltConnectionChangeDefinition,
                     c.AltLowerConnectionChangeDefinition
@@ -196,13 +197,13 @@ export class GameController {
     printConnection(isOnAir: boolean) {
         if (this._currentCameraConnection !== undefined) {
             let additionalInfo = this._currentCameraConnection.connection.connectionAdditionalInfo();
-            console.log(
+            this.logger.Log(
                 `${this._currentCameraConnection.connection.AtemImputNumber} - ${this.atem.nameGet(
                     this._currentCameraConnection.connection.AtemImputNumber
                 )}${additionalInfo ? `(${additionalInfo})` : ''} ${isOnAir ? ' - onAir' : ''}`
             );
         } else {
-            console.log('Input selected that is not managed with this application');
+            this.logger.Log('Input selected that is not managed with this application');
         }
     }
 
