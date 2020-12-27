@@ -99,33 +99,33 @@ The `ImageConnections` tag allows to specify an arbitrary number of Inputs to th
 {
     // The input number of the image (this corresponds to the physical input number on the video mixer)
     // The name of the input is taken from ATEM
-    AtemInputNumber: 1,
+    "AtemInputNumber": 1,
 
     // Optional section that specifies the connection to the camera control.
     // This section is required to get access to the pan/tilt and the zoom feature of a camera
-    CgfCameraConnection: {
-        ConnectionUrl: 'http://localhost:5000',
-        ConnectionPort: 'COM6',
+    "CgfCameraConnection": {
+        "ConnectionUrl": "http://localhost:5000",
+        "ConnectionPort": "COM6",
     },
 
     // This section specifies which camera should be selected when the connection change buttons get pressed. Possible values: up, down, left, right
-    ConnectionChangeDefinition: {
-        left: 2,
-        right: 2,
+    "ConnectionChangeDefinition": {
+        "left": 2,
+        "right": 2,
     },
 
     // Connection change definition when the "Alt" key is pressed while changing the connection.
     // This section may be omitted. If so, the values defined in ConnectionChangeDefinition are used
-    AltConnectionChangeDefinition: {
-        up: 5,
-        down: 6,
+    "AltConnectionChangeDefinition": {
+        "up": 5,
+        "down": 6,
     },
 
     // Connection change definition when the "AltLower" key is pressed while changing the connection.
     // This section may be omitted. If so, the values defined in ConnectionChangeDefinition are used
-    AltLowerConnectionChangeDefinition: {
-        up: 7,
-        down: 8,
+    "AltLowerConnectionChangeDefinition": {
+        "up": 7,
+        "down": 8,
     },
 }
 ```
