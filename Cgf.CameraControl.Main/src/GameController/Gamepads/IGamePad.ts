@@ -8,10 +8,17 @@ export enum InputChangeDirection {
     right = 'right',
 }
 
-export enum AlternateInputChangeDirection {
+export enum SpecialFunctionKey {
+    up = 'up',
+    down = 'down',
+    left = 'left',
+    right = 'right',
+}
+
+export enum AltKeyState {
     none,
-    alternateKeyUpper,
-    alternateKeyLower,
+    altKeyUpper,
+    altKeyLower,
 }
 
 export interface IGamepadEvents {
@@ -19,10 +26,10 @@ export interface IGamepadEvents {
     tilt(value: number): void;
     zoom(value: number): void;
     focus(value: number): void;
-    inputChange(direction: InputChangeDirection, altKey: AlternateInputChangeDirection): void;
+    inputChange(direction: InputChangeDirection, altKey: AltKeyState): void;
+    specialFunction(keyIndex: SpecialFunctionKey, altKey: AltKeyState): void;
     cut(): void;
     auto(): void;
-    keyToggle(keyIndex: number): void;
 }
 
 export interface IGamePad {

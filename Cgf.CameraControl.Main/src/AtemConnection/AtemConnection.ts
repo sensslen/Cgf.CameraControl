@@ -67,6 +67,10 @@ export class AtemConnection {
         }
     }
 
+    executeMacro(macro: number) {
+        this.atem.macroRun(macro);
+    }
+
     cut(me: number): void {
         this.atem.cut(me);
     }

@@ -32,8 +32,10 @@ export class dualshock4 implements IGamePad {
         this.pad.on('l2:press', () => gamepadWrapper.altLowerKeyPress());
         this.pad.on('l2:release', () => gamepadWrapper.altLowerKeyRelease());
 
-        this.pad.on('x:press', () => gamepadWrapper.aKeyPress());
-        this.pad.on('circle:press', () => gamepadWrapper.bKeyPress());
+        this.pad.on('x:press', () => gamepadWrapper.specialFunctionDownKeyPress());
+        this.pad.on('circle:press', () => gamepadWrapper.specialFunctionRightKeyPress());
+        this.pad.on('square:press', () => gamepadWrapper.specialFunctionLeftKeyPress());
+        this.pad.on('triangle:press', () => gamepadWrapper.specialFunctionUpKeyPress());
 
         this.pad.connect();
     }

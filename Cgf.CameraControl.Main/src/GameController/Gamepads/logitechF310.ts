@@ -30,8 +30,10 @@ export class logitechF310 implements IGamePad {
         pad.on('LT:press', () => gamepadWrapper.altLowerKeyPress());
         pad.on('LT:release', () => gamepadWrapper.altLowerKeyRelease());
 
-        pad.on('A:press', () => gamepadWrapper.aKeyPress());
-        pad.on('B:press', () => gamepadWrapper.bKeyPress());
+        pad.on('A:press', () => gamepadWrapper.specialFunctionDownKeyPress());
+        pad.on('B:press', () => gamepadWrapper.specialFunctionRightKeyPress());
+        pad.on('X:press', () => gamepadWrapper.specialFunctionLeftKeyPress());
+        pad.on('Y:press', () => gamepadWrapper.specialFunctionUpKeyPress());
 
         pad.connect();
     }

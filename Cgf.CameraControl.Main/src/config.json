@@ -10,7 +10,16 @@
             "ControllerType": "logitech/gamepadf310",
             "AtemConnection": "me4",
             "AtemMixEffectBlock": 2,
-            "AtemToggleKeyIndexes": [0, 1],
+            "SpecialFunctions": {
+                "down": {
+                    "Type": "key",
+                    "Index": 0
+                },
+                "right": {
+                    "Type": "key",
+                    "Index": 1
+                }
+            },
             "ImageConnections": [
                 {
                     "AtemInputNumber": 1,
