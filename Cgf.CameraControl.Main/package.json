@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "@microsoft/signalr": "^5.0.1",
-        "ajv": "^7.0.2",
+        "ajv": "^6.9.1",
         "atem-connection": "^2.1.0",
         "axios": "^0.21.1",
         "everpolate": "0.0.3",
@@ -40,9 +40,7 @@
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "strict-event-emitter-types": "^2.0.0",
-        "styled-components": "^5.2.1",
-        "usb-detection": "^4.10.0",
-        "yargs": "^16.2.0"
+        "usb-detection": "^4.10.0"
     },
     "devDependencies": {
         "@teamsupercell/typings-for-css-modules-loader": "^2.4.0",
