@@ -350,3 +350,6 @@ MigrationBackup/
 .ionide/
 Cgf.CameraControl.Master/build/
 Cgf.CameraControl.Main/build/
+Cgf.CameraControl.Main/src/TypeValidation/
+.css.d.ts
+Cgf.CameraControl.Main/dist/

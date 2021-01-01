@@ -1,0 +1,211 @@
+{
+  "$ref": "#/definitions/IConfigFile",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AtemConnectionConfig": {
+      "properties": {
+        "IP": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "IP",
+        "identifier"
+      ],
+      "type": "object"
+    },
+    "ESpecialFunctionType": {
+      "enum": [
+        "key",
+        "macro"
+      ],
+      "type": "string"
+    },
+    "IConfigFile": {
+      "properties": {
+        "AtemConnections": {
+          "items": {
+            "$ref": "#/definitions/AtemConnectionConfig"
+          },
+          "type": "array"
+        },
+        "Controllers": {
+          "items": {
+            "$ref": "#/definitions/IInternalGameControllerConfig"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "Controllers",
+        "AtemConnections"
+      ],
+      "type": "object"
+    },
+    "IInternalGameControllerConfig": {
+      "properties": {
+        "AltLowerSpecialFunctions": {
+          "additionalProperties": false,
+          "properties": {
+            "A": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "B": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "X": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "Y": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            }
+          },
+          "type": "object"
+        },
+        "AltSpecialFunctions": {
+          "additionalProperties": false,
+          "properties": {
+            "A": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "B": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "X": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "Y": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            }
+          },
+          "type": "object"
+        },
+        "AtemConnection": {
+          "type": "string"
+        },
+        "AtemMixEffectBlock": {
+          "type": "number"
+        },
+        "ControllerType": {
+          "type": "string"
+        },
+        "ImageConnections": {
+          "items": {
+            "$ref": "#/definitions/ImageConnectionConfig"
+          },
+          "type": "array"
+        },
+        "SpecialFunctions": {
+          "additionalProperties": false,
+          "properties": {
+            "A": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "B": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "X": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            },
+            "Y": {
+              "$ref": "#/definitions/ISpecialFunctionKey"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "AtemConnection",
+        "AtemMixEffectBlock",
+        "ControllerType",
+        "ImageConnections",
+        "SpecialFunctions"
+      ],
+      "type": "object"
+    },
+    "ISpecialFunctionKey": {
+      "properties": {
+        "Index": {
+          "type": "number"
+        },
+        "Type": {
+          "$ref": "#/definitions/ESpecialFunctionType"
+        }
+      },
+      "required": [
+        "Type",
+        "Index"
+      ],
+      "type": "object"
+    },
+    "ImageConnectionConfig": {
+      "properties": {
+        "AltConnectionChangeDefinition": {
+          "additionalProperties": false,
+          "properties": {
+            "down": {
+              "type": "number"
+            },
+            "left": {
+              "type": "number"
+            },
+            "right": {
+              "type": "number"
+            },
+            "up": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "AltLowerConnectionChangeDefinition": {
+          "additionalProperties": false,
+          "properties": {
+            "down": {
+              "type": "number"
+            },
+            "left": {
+              "type": "number"
+            },
+            "right": {
+              "type": "number"
+            },
+            "up": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "AtemInputNumber": {
+          "type": "number"
+        },
+        "ConnectionChangeDefinition": {
+          "additionalProperties": false,
+          "properties": {
+            "down": {
+              "type": "number"
+            },
+            "left": {
+              "type": "number"
+            },
+            "right": {
+              "type": "number"
+            },
+            "up": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "AtemInputNumber",
+        "ConnectionChangeDefinition"
+      ],
+      "type": "object"
+    }
+  }
+}
