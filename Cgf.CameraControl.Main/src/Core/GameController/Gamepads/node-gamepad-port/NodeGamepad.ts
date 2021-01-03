@@ -27,6 +27,8 @@ export class NodeGamepad extends EventEmitter {
 
     public start() {
         this.log(`Starting connection procedure to device:${JSON.stringify(this.toIDeviceSpec(this.config))}`);
+
+        startMonitoring();
         find(this.config.vendorID, this.config.productID)
             .then((devices) => {
                 for (let device of devices) {
@@ -34,7 +36,7 @@ export class NodeGamepad extends EventEmitter {
                 }
             })
             .catch((error) => this.log(`usb device find error:${JSON.stringify(error)}`));
-        startMonitoring();
+
         on(`add:${this.config.vendorID}:${this.config.productID}`, (device) => this.connectIfMatching(device));
     }
 
