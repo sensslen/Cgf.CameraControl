@@ -4,13 +4,12 @@ import { EventEmitter } from 'events';
 import StrictEventEmitter from 'strict-event-emitter-types';
 import * as gamepadConfig from './node-gamepad-port/controllers/logitech/gamepadf310.json';
 import { INodeGamepadConfig, NodeGamepad } from './node-gamepad-port/NodeGamepad';
-import { ILogger } from '_/Core/Logging/ILogger';
-import { MediaPoolClipDescriptionCommand } from 'atem-connection/dist/commands';
+import { ILogger } from '../../Logging/ILogger';
 
 const interpolate = require('everpolate').linear;
 
 export class logitechF310 implements IGamePad {
-    private pad: any;
+    private readonly pad: NodeGamepad;
     private altkeyState: AltKeyState = AltKeyState.none;
     private readonly moveInterpolation: number[][] = [
         [0, 63, 31, 127, 128, 160, 172, 255],
@@ -102,11 +101,11 @@ export class logitechF310 implements IGamePad {
             this.keypadEvents$.emit('specialFunction', SpecialFunctionKey.y, this.altkeyState);
         });
 
-        this.pad.connect();
+        this.pad.start();
     }
 
     dispose() {
-        this.pad.disconnect();
+        this.pad.stop();
     }
 
     rumble(): void {

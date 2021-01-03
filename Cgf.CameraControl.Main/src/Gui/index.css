@@ -1,0 +1,21 @@
+html {
+    display: flex;
+    margin: 0;
+    align-content: stretch;
+    flex-grow: 1;
+    font-family: sans-serif;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    align-content: stretch;
+    margin: 0;
+    flex-grow: 1;
+}
+
+#root {
+    display: flex;
+    flex-grow: 1;
+}

@@ -1,24 +1,21 @@
 {
     "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "jsx": "react",
-        "baseUrl": ".",
-        "paths": {
-            "_/*": ["src/*"],
-            "_public/*": ["public/*"],
-            "_main/*": ["src/main/*"],
-            "_models/*": ["src/models/*"],
-            "_renderer/*": ["src/renderer/*"],
-            "_utils/*": ["src/utils/*"]
-        },
+        "allowJs": true,
         "module": "commonjs",
-        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
         "noImplicitAny": true,
-        "noImplicitThis": true,
-        "strictNullChecks": true,
         "sourceMap": true,
-        "target": "esnext",
-        "resolveJsonModule": true
+        "baseUrl": ".",
+        "outDir": "dist",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "paths": {
+            "*": ["node_modules/*"]
+        },
+        "jsx": "react",
+        "noImplicitThis": true,
+        "strictNullChecks": true
     },
-    "exclude": ["node_modules"]
+    "include": ["src/**/*"]
 }
