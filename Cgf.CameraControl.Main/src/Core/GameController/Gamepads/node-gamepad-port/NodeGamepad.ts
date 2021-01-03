@@ -26,8 +26,14 @@ export class NodeGamepad extends EventEmitter {
     }
 
     public start() {
-        this.log(`Starting connection procedure to device:${JSON.stringify(this.config as IDeviceSpec)}`);
-        find(this.config.vendorID, this.config.productID, (device) => this.connectIfMatching(device));
+        this.log(`Starting connection procedure to device:${JSON.stringify(this.toIDeviceSpec(this.config))}`);
+        find(this.config.vendorID, this.config.productID)
+            .then((devices) => {
+                for (let device of devices) {
+                    this.connectIfMatching(device);
+                }
+            })
+            .catch((error) => this.log(`usb device find error:${JSON.stringify(error)}`));
         startMonitoring();
         on(`add:${this.config.vendorID}:${this.config.productID}`, (device) => this.connectIfMatching(device));
     }
@@ -65,8 +71,12 @@ export class NodeGamepad extends EventEmitter {
 
     private log(toLog: string) {
         if (this.logger) {
-            this.logger.Log(toLog);
+            this.logger.Log(`NodeGamepad:${toLog}`);
         }
+    }
+
+    private toIDeviceSpec(spec: IDeviceSpec): IDeviceSpec {
+        return { vendorID: spec.vendorID, productID: spec.productID, serialNumber: spec.serialNumber };
     }
 
     private connectIfMatching(device: Device): void {
