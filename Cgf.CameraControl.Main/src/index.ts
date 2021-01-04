@@ -1,8 +1,9 @@
 import { app, BrowserWindow } from 'electron';
-import { MainWindow } from './Gui/MainWindow';
+import { MainWindowLoader } from './Gui/MainWindowLoader';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: any;
 
-const mainWindow = new MainWindow();
+const mainWindow = new MainWindowLoader(MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-next-line global-require

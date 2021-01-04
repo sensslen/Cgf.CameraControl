@@ -1,4 +1,3 @@
-//import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import { ConnectedStyle, NotConnectedStyle } from './styled';
 
@@ -18,8 +17,8 @@ export class Connection extends React.Component<{}, ConnectionProps> {
     }
 
     componentDidMount() {
-        /*ipcRenderer.on('connected', (event, connected) => {
-            this.setState({ connected: connected as boolean });
-        });*/
+        window.api.electronIpcOn('connected', (event, connected: boolean) => {
+            this.setState({ connected: connected });
+        });
     }
 }

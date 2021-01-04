@@ -4,8 +4,9 @@ import { ConfigParser } from '../Core/Configuration/ConfigParser';
 import Dictionary from '../Core/Dictionary/Dictionary';
 import { GameController } from '../Core/GameController/GameController';
 import { ILogger } from '../Core/Logging/ILogger';
+import * as path from 'path';
 
-export class MainWindow {
+export class MainWindowLoader {
     private mainWindow?: Electron.BrowserWindow;
     private controllers: Array<GameController> = [];
     private readonly logger: ILogger = {
@@ -17,11 +18,17 @@ export class MainWindow {
         },
     };
 
+    constructor(private _preloadLocation: any) {}
+
     public createWindow(mainWindowLocation: any) {
         // Create the browser window.
         this.mainWindow = new BrowserWindow({
             height: 600,
             width: 800,
+            webPreferences: {
+                contextIsolation: true,
+                preload: this._preloadLocation,
+            },
         });
 
         // and load the index.html of the app.
