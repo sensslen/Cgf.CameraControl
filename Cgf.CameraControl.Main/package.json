@@ -68,7 +68,7 @@
                                     "html": "./src/Gui/MainWindow/index.html",
                                     "js": "./src/Gui/MainWindow/renderer.tsx",
                                     "preload": {
-                                        "js": "./src/WindowInterface/preload.ts"
+                                        "js": "./src/Gui/WindowInterface/preload.ts"
                                     },
                                     "name": "main_window"
                                 }
