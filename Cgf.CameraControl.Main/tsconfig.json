@@ -15,7 +15,8 @@
         },
         "jsx": "react",
         "noImplicitThis": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "target": "ES6"
     },
     "include": ["src/**/*"]
 }
