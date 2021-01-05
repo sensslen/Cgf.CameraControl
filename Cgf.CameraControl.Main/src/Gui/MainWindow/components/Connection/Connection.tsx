@@ -6,14 +6,14 @@ type ConnectionProps = {
 };
 
 export class Connection extends React.Component<{}, ConnectionProps> {
-    render() {
-        return this.state.connected ? <ConnectedStyle /> : <NotConnectedStyle />;
+    constructor(props: Readonly<{}> | {}) {
+        super(props);
+
+        this.state = { connected: false };
     }
 
-    componentWillMount() {
-        this.setState({
-            connected: false,
-        });
+    render() {
+        return this.state.connected ? <ConnectedStyle /> : <NotConnectedStyle />;
     }
 
     componentDidMount() {
