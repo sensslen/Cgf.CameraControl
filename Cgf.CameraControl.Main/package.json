@@ -34,7 +34,7 @@
     "dependencies": {
         "@microsoft/signalr": "^3.1.8",
         "atem-connection": "^2.1.0",
-        "axios": "^0.20.0",
+        "axios": "^0.21.1",
         "everpolate": "0.0.3",
         "node-gamepad": "^0.1.15",
         "strict-event-emitter-types": "^2.0.0",

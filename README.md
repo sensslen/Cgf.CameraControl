@@ -1,5 +1,7 @@
 # Cgf.CameraControl
 
+REPOSITORY OBSOLETE NOTICE: Please note that this repository is now obsolete. it is superseeded by github.com/sensslen/Cgf.CameraControl.Main.Cli and other repositories in the same namespace. 
+
 This project consists of the components that can be used to control Cameras and a Video mixer using a gamepad in order to allow one operator for the whole System.
 
 ## Components
